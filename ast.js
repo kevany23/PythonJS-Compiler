@@ -1,5 +1,9 @@
+/**
+ * This is the main interface file for the AST
+ */
+
 // Enum for Operators
-export const Operator = {
+const Operator = {
   PLUS: "plus",
   MINUS: "minus",
   MULTIPLY: "multiply",
@@ -9,8 +13,9 @@ export const Operator = {
   INCREMENT: "increment",
   DECREMENT: "decrement",
   AND: "and",
-  OR: "or"
+  OR: "or",
   NOT: "not",
+  PRINT: "print"
 };
 
 /**
@@ -22,7 +27,7 @@ export const Operator = {
  * operand - can be one operand or a list of multiple operands depending on
  *    subclass. The subclass determines the ordering.
  */
-export class Node {
+class Node {
   constructor(operator, operand) {
     this.operator = operator;
     this.operand = operand;
@@ -35,4 +40,26 @@ export class Node {
   }
   generateCode() {
   }
+}
+
+class Ast {
+  constructor() {
+    this.instructions = [];
+  }
+  addInstruction(instr) {
+    this.instructions.push(instr);
+  }
+  generateCode() {
+    let compiled = [];
+    for (let instr of instructions) {
+      compiled.push(instr.generateCode);
+    }
+    return compiled;
+  }
+}
+
+module.exports = {
+  Node: Node,
+  Ast: Ast,
+  Operator: Operator
 }

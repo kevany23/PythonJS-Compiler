@@ -3,7 +3,7 @@
  * the name of the file as an arg
  */
 const FileReader = require('fs');
-
+const Parser = require('./parser');
 
 const args = process.argv;
 if (args.length < 3) {
@@ -12,10 +12,26 @@ if (args.length < 3) {
 }
 const fileName = args[2];
 
-FileReader.readFile(fileName, (err, data) => {
+FileReader.readFile(fileName, 'utf8', (err, data) => {
   if (err) {
     console.log("Error: File cannot be read.");
     process.exit(1);
   }
-  // handle data here
+  console.log("Compiling...")
+  // handle data here, split into lines
+  let lines = data.split('\n');
+  console.log(lines);
+  let compiled = Parser.parse(lines);
+  generateFile(compiled);
 });
+
+/**
+ * Generates the new file from the compilation
+ */
+function generateFile(data) {
+  FileReader.writeFile("compiled.js", data, (err) => {
+    if (err) {
+      console.log("File write err");
+    }
+  });
+}
