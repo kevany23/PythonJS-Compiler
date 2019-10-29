@@ -12,11 +12,23 @@ module.exports = {
 // First break file into line by line
 function parse(lines) {
   let buffer = "";
-  console.log("Parsing.");
+  console.log("Parsing...");
   let stack = [];
   let currIndentLevel = 0;
-  for (let line of lines) {
-    console.log(getSpaces(line));
+  let indentMap = new Map();
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+    let indent = getSpaces(line);
+    if (indent > 0) {
+      if (indent % 2 === 1) {
+        // Indentation Error, invalid number of spaces:
+        throwCompileError(i + 1, "Indentation Error: Invalid number of spaces.");
+      }
+      else if (typeof indentMap.get(indent - 2)) {
+        throwCompileError(i + 1, "Indentation Error: Invalid indent.");
+      }
+    }
     console.log(line);
     if (line.substr(0,5) === "print") {
       console.log("Print statement detected.");
@@ -45,4 +57,11 @@ function getSpaces(line) {
     }
   }
   return count;
+}
+
+function throwCompileError(lineNumber, message) {
+  console.log("Compile time error at line " + lineNumber + ".");
+  console.log(message);
+  console.log("Compilation failed.");
+  process.exit(1);
 }

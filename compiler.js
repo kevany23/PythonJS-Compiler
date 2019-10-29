@@ -20,7 +20,6 @@ FileReader.readFile(fileName, 'utf8', (err, data) => {
   console.log("Compiling...")
   // handle data here, split into lines
   let lines = data.split('\n');
-  console.log(lines);
   let compiled = Parser.parse(lines);
   generateFile(compiled);
 });
