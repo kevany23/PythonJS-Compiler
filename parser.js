@@ -4,6 +4,8 @@
 
 const Ast = require("./ast");
 const Operations = require("./ast/operations");
+const Util = require("./util");
+const LineParser = require("./parser/LineParser");
 
 module.exports = {
   parse: parse
@@ -21,15 +23,25 @@ function parse(lines) {
     let line = lines[i];
     let indent = getSpaces(line);
     if (indent > 0) {
+      // Errors thrown here
       if (indent % 2 === 1) {
-        // Indentation Error, invalid number of spaces:
         throwCompileError(i + 1, "Indentation Error: Invalid number of spaces.");
       }
-      else if (typeof indentMap.get(indent - 2)) {
+
+      let prev = indentMap.get(indent - 2);
+      if (! Util.defined(prev) || ! prev.isCodeBlock()) {
         throwCompileError(i + 1, "Indentation Error: Invalid indent.");
       }
+      // Now the indented line should be legit
+      // create the AST node and set it in the map
+      let node = LineParser.parseLine(line);
+      indentMap.set(indent, node);
     }
-    console.log(line);
+    else {
+      indentMap = new Map();
+      let node = LineParser.parseLine(line);
+      indentMap.set(indent, node);
+    }
     if (line.substr(0,5) === "print") {
       console.log("Print statement detected.");
       let words = line.split(" ")
@@ -60,7 +72,7 @@ function getSpaces(line) {
 }
 
 function throwCompileError(lineNumber, message) {
-  console.log("Compile time error at line " + lineNumber + ".");
+  console.log("Compiler error at line " + lineNumber + ".");
   console.log(message);
   console.log("Compilation failed.");
   process.exit(1);

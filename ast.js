@@ -26,17 +26,23 @@ const Operator = {
  * operator - the operation specified
  * operand - can be one operand or a list of multiple operands depending on
  *    subclass. The subclass determines the ordering.
+ * block - if the operator contains a code block to execute on, like a loop
+ *  or function definition
  */
 class Node {
   constructor(operator, operand) {
     this.operator = operator;
     this.operand = operand;
+    this.codeBlock = false;
   }
   operator() {
     return this.operator;
   }
   operand() {
     return this.operand;
+  }
+  isCodeBlock() {
+    return this.codeBlock;
   }
   generateCode() {
   }
@@ -52,7 +58,7 @@ class Ast {
   generateCode() {
     let compiled = [];
     for (let instr of instructions) {
-      compiled.push(instr.generateCode);
+      compiled.push(instr.generateCode());
     }
     return compiled;
   }
