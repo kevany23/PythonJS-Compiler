@@ -42,6 +42,16 @@ class PrintNode extends Ast.Node {
   generateCode() {
     return 'console.log(' + this.operand + ');';
   }
+  static getOperand(line) {
+    let idx = line.indexOf("print(");
+    if (idx === -1) {
+      return -1;
+    }
+    let idx1 = line.indexOf("(", idx);
+    let idx2 = line.indexOf(")", idx1 + 1);
+    let operand = line.substring(idx1 + 1, idx2);
+    return operand;
+  }
 }
 
 module.exports = {

@@ -4,14 +4,14 @@
 
 // Enum for Operators
 const Operator = {
-  PLUS: "plus",
-  MINUS: "minus",
-  MULTIPLY: "multiply",
-  DIVIDE: "divide",
-  ASSIGN: "assign",
-  CALL: "call",
-  INCREMENT: "increment",
-  DECREMENT: "decrement",
+  PLUS: "+",
+  MINUS: "-",
+  MULTIPLY: "*",
+  DIVIDE: "/",
+  ASSIGN: "=",
+  CALL: ".(",
+  INCREMENT: "++",
+  DECREMENT: "--",
   AND: "and",
   OR: "or",
   NOT: "not",
@@ -45,6 +45,8 @@ class Node {
     return this.codeBlock;
   }
   generateCode() {
+  }
+  static getOperand(line) {
   }
 }
 

@@ -21,6 +21,10 @@ function parse(lines) {
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
+    // skip unnecessary handling of empty lines
+    if (line === "") {
+      continue;
+    }
     let indent = getSpaces(line);
     if (indent > 0) {
       // Errors thrown here
