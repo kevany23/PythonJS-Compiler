@@ -4,6 +4,7 @@
  */
 const FileReader = require('fs');
 const Parser = require('./parser');
+const Generator = require('./generator');
 
 const args = process.argv;
 if (args.length < 3) {
@@ -20,7 +21,8 @@ FileReader.readFile(fileName, 'utf8', (err, data) => {
   console.log("Compiling...")
   // handle data here, split into lines
   let lines = data.split('\n');
-  let compiled = Parser.parse(lines);
+  let ast = Parser.parse(lines);
+  let compiled = Generator.generate(ast);
   generateFile(compiled);
 });
 

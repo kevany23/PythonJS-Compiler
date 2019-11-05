@@ -15,7 +15,7 @@ module.exports = {
 function parse(lines) {
   let buffer = "";
   console.log("Parsing...");
-  let stack = [];
+  let nodes = [];
   let currIndentLevel = 0;
   let indentMap = new Map();
 
@@ -44,9 +44,11 @@ function parse(lines) {
     else {
       indentMap = new Map();
       let node = LineParser.parseLine(line);
+      console.log(node);
       indentMap.set(indent, node);
+      nodes.push(node);
     }
-    if (line.substr(0,5) === "print") {
+    /*if (line.substr(0,5) === "print") {
       console.log("Print statement detected.");
       let words = line.split(" ")
       console.log(words);
@@ -54,9 +56,9 @@ function parse(lines) {
       let c = print.generateCode();
       console.log(c);
       buffer = buffer + c;
-    }
+    }*/
   }
-  return buffer;
+  return nodes;
 }
 
 /**

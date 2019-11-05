@@ -7,10 +7,8 @@ const OpSymbol = require("./OpSymbol");
 function parseLine(line) {
   console.log("Parsing the line");
   console.log(line);
-  let op = getOperator(line);
-  let opnd = getOperand(line, op);
-  console.log(opnd);
-  return new Ast.Node();
+  let node = createNode(line);
+  return node;
 }
 
 /*
@@ -33,11 +31,17 @@ function getOperator(line) {
 function getOperand(line, op) {
   let operator = OpSymbol.mapSymbolToOperator(op[0]);
   let operand = operator.getOperand(line);
+  let node = new operator(operand);
+  console.log("NODE:");
+  console.log(node);
+  return node;
 }
 
 // TODO: work on building the AST for printnodes
-function createNode() {
-
+function createNode(line) {
+  let operator = getOperator(line);
+  let node = getOperand(line, operator);
+  return node;
 }
 
 module.exports = {
