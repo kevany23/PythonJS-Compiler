@@ -5,8 +5,6 @@ const Ast = require("../ast");
 const OpSymbol = require("./OpSymbol");
 
 function parseLine(line) {
-  console.log("Parsing the line");
-  console.log(line);
   let node = createNode(line);
   return node;
 }
@@ -32,8 +30,6 @@ function getOperand(line, op) {
   let operator = OpSymbol.mapSymbolToOperator(op[0]);
   let operand = operator.getOperand(line);
   let node = new operator(operand);
-  console.log("NODE:");
-  console.log(node);
   return node;
 }
 

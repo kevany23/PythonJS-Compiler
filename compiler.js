@@ -22,6 +22,7 @@ FileReader.readFile(fileName, 'utf8', (err, data) => {
   // handle data here, split into lines
   let lines = data.split('\n');
   let ast = Parser.parse(lines);
+  console.log("Generating file...");
   let compiled = Generator.generate(ast);
   generateFile(compiled);
 });

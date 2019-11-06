@@ -4,6 +4,21 @@
  */
 const Ast = require("../ast.js");
 
+const Operator = {
+  PLUS: "+",
+  MINUS: "-",
+  MULTIPLY: "*",
+  DIVIDE: "/",
+  ASSIGN: "=",
+  CALL: ".(",
+  INCREMENT: "++",
+  DECREMENT: "--",
+  AND: " and ",
+  OR: " or ",
+  NOT: "not",
+  PRINT: "print"
+};
+
 /**
  * Used for things like loops and function definitions that use
  * code blocks. Has addLine() and
@@ -25,7 +40,7 @@ class CodeBlockNode extends Ast.Node {
 
 class PlusNode extends Ast.Node {
   construtor(operator, operand) {
-    //super(Ast.Operator.PLUS, operand);
+    //super(Operator.PLUS, operand);
     this.numOperands = 2;
   }
   generateCode() {
@@ -36,7 +51,7 @@ class PlusNode extends Ast.Node {
 
 class PrintNode extends Ast.Node {
   constructor(operand) {
-    super(Ast.Operator.PRINT, operand);
+    super(Operator.PRINT, operand);
     this.numOperands = 1;
   }
   generateCode() {
@@ -54,6 +69,27 @@ class PrintNode extends Ast.Node {
   }
 }
 
+class AssignNode extends Ast.Node {
+  constructor(operand) {
+    super(Operator.ASSIGN, operand);
+    this.numOperands = 2;
+  }
+  generateCode() {
+    return "var " + this.operand[0] + " = " + this.operand[1] + ";";
+  }
+  static getOperand(line) {
+    let idx = line.indexOf("=");
+    if (idx === -1) {
+      return -1;
+    }
+    let variable = line.substring(0, idx);
+    let value = line.substring(idx + 1, line.length);
+    return [variable, value];
+  }
+}
+
 module.exports = {
-  PrintNode: PrintNode
+  Operator: Operator,
+  PrintNode: PrintNode,
+  AssignNode: AssignNode
 }

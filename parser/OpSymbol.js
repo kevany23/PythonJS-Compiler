@@ -1,19 +1,6 @@
 const Operations = require("../ast/operations");
 
-const Operator = {
-  PLUS: "+",
-  MINUS: "-",
-  MULTIPLY: "*",
-  DIVIDE: "/",
-  ASSIGN: "=",
-  CALL: ".(",
-  INCREMENT: "++",
-  DECREMENT: "--",
-  AND: "and",
-  OR: "or",
-  NOT: "not",
-  PRINT: "print"
-};
+const Operator = Operations.Operator;
 
 const Closure = {
   CALL: ")",
@@ -38,9 +25,9 @@ const Symbols = [
 function mapSymbolToOperator(sym) {
   switch(sym) {
     case Operator.PRINT:
-      console.log("mapped");
-      console.log(Operations.PrintNode);
       return Operations.PrintNode;
+    case Operator.ASSIGN:
+      return Operations.AssignNode;
     case Operator.PLUS:
       break;
     case Operator.MINUS:
@@ -48,8 +35,6 @@ function mapSymbolToOperator(sym) {
     case Operator.MULTIPLY:
       break;
     case Operator.DIVIDE:
-      break;
-    case Operator.ASSIGN:
       break;
     case Operator.CALL:
       break;
@@ -70,7 +55,6 @@ function findOperators(line) {
   let foundSymbols = [];
   for (let symbol of Symbols) {
     if (line.includes(symbol)) {
-      console.log("FOUND SYMBOL");
       foundSymbols.push(symbol);
     }
   }

@@ -44,19 +44,9 @@ function parse(lines) {
     else {
       indentMap = new Map();
       let node = LineParser.parseLine(line);
-      console.log(node);
       indentMap.set(indent, node);
       nodes.push(node);
     }
-    /*if (line.substr(0,5) === "print") {
-      console.log("Print statement detected.");
-      let words = line.split(" ")
-      console.log(words);
-      let print = new Operations.PrintNode(words[1]);
-      let c = print.generateCode();
-      console.log(c);
-      buffer = buffer + c;
-    }*/
   }
   return nodes;
 }
