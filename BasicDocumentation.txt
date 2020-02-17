@@ -1,0 +1,26 @@
+How to run:
+To run the program, enter the command:
+node compiler.js [filename]
+
+The program will produce an output file called compiled.js.
+
+Pipeline Structure:
+The main program is run in compiler.js.
+
+File is Read -> Split into line by line -> lines are passed into AST ->
+Ast is used to buffer -> buffer is written to compiled file
+
+Limitations:
+There are several simplifications in this project.
+Statements need to be fit in one line:
+e.g:
+print("Hello world")
+x = 10
+
+instead of
+
+print(
+"Hello World"
+) # Don't do this
+x =
+10 # Don't do this
