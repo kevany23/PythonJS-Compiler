@@ -29,7 +29,7 @@ function mapSymbolToOperator(sym) {
     case Operator.ASSIGN:
       return Operations.AssignNode;
     case Operator.PLUS:
-      break;
+      return Operations.PlusNode;
     case Operator.MINUS:
       break;
     case Operator.MULTIPLY:

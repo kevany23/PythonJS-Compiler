@@ -16,7 +16,8 @@ const Operator = {
   AND: " and ",
   OR: " or ",
   NOT: "not",
-  PRINT: "print"
+  PRINT: "print",
+  CONSTANT: ""
 };
 
 /**
@@ -35,6 +36,16 @@ class CodeBlockNode extends Ast.Node {
   }
   getCode() {
     return this.body;
+  }
+}
+
+class ConstantNode extends Ast.Node {
+  constructor(operator, operand) {
+    super(Operator.CONSTANT, operand);
+    this.numOperands = 1;
+  }
+  generateCode() {
+    return "" + this.operand[0];
   }
 }
 
