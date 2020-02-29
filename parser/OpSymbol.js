@@ -19,7 +19,8 @@ const Symbols = [
   " and ",
   " or ",
   "not ",
-  "print"
+  "print",
+  '"'
 ];
 
 function mapSymbolToOperator(sym) {
@@ -30,6 +31,12 @@ function mapSymbolToOperator(sym) {
       return Operations.AssignNode;
     case Operator.PLUS:
       return Operations.PlusNode;
+    case Operator.CONSTANT_STRING:
+      return Operations.ConstantStringNode;
+    case Operator.CONSTANT_NUMBER:
+      return Operations.ConstantNumberNode;
+    case Operator.VARIABLE_NAME:
+      return Operations.VariableNameNode;
     case Operator.MINUS:
       break;
     case Operator.MULTIPLY:
@@ -57,6 +64,16 @@ function findOperators(line) {
     if (line.includes(symbol)) {
       foundSymbols.push(symbol);
     }
+  }
+  // Case if it's a int value
+  if (foundSymbols.length == 0) {
+    let intValue = parseInt(line);
+    if (Number.isInteger(intValue)) {
+      foundSymbols.push(Operator.CONSTANT_NUMBER);
+    }
+  }
+  if (foundSymbols.length == 0) {
+    foundSymbols.push(Operator.VARIABLE_NAME);
   }
   return foundSymbols;
 }

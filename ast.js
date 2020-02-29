@@ -34,6 +34,7 @@ class Node {
     this.operator = operator;
     this.operand = operand;
     this.codeBlock = false;
+    this.hasNesting = true;
   }
   operator() {
     return this.operator;
@@ -46,7 +47,11 @@ class Node {
   }
   generateCode() {
   }
+  createOperandNodes(newNode) {
+    this.operand = newNode;
+  }
   static getOperand(line) {
+    return line;
   }
 }
 

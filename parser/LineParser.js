@@ -16,6 +16,7 @@ We use this fact to parse the line.
 
 
 function getOperator(line) {
+  //console.log(line);
   let op = OpSymbol.findOperators(line);
   return op;
 }
@@ -37,6 +38,13 @@ function getOperand(line, op) {
 function createNode(line) {
   let operator = getOperator(line);
   let node = getOperand(line, operator);
+  if (node.hasNesting) {
+    // handle subnodes
+    let operand = node.operand;
+    for (let text of operand) {
+      createNode(text);
+    }
+  }
   return node;
 }
 
